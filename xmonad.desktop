@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=XMonad
+Exec=/home/victor/.local/bin/vmonad
+NoDisplay=true
+X-GNOME-WMName=XMonad
+X-GNOME-Autostart-Phase=WindowManager
+X-GNOME-Provides=windowmanager
+X-GNOME-Autostart-Notify=true

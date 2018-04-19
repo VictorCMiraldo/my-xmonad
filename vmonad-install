@@ -1,0 +1,19 @@
+#! /bin/bash
+
+if [[ ! $# -eq 0 ]]; then
+  echo "No arguments expected!"
+  exit 1
+fi
+
+# Make sure all dependencies are installed
+# libxinerama-dev
+# libx11-dev
+# libxft-dev
+
+sudo cp ./xmonad.desktop /usr/share/applications/xmonad.desktop
+
+gsettings set org.mate.session.required-components windowmanager xmonad
+
+# For going back to marco compositor, run:
+#  gsettings set org.mate.session.required-components windowmanager marco
+
