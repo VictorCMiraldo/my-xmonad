@@ -8,12 +8,16 @@ myMod = mod1Mask
 -- My config
 myConfig = mateConfig 
   { modMask = myMod
+  , focusedBorderColor = "#00FFAA"
   } `additionalKeys` myKeys
 
 
-myKeys 
-  = [ ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && vmonad --restart" )
-    ]
+myKeys = [ 
+  -- It is VERY important to override the restart command.
+    ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && xmonad --restart" )
+  ]
+
+
 -- Registering and launching
 main = mateRegister 
-    >> xmonad myConfig 
+    >> xmonad myConfig -- we need 'xmonad' here because we want CLI argument parsing.
