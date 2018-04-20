@@ -17,10 +17,10 @@ if [ -x /usr/bin/mate-power-manager ]; then
   sleep 1
   mate-power-manager
 fi
-
-if [ -x /usr/bin/nm-applet ]; then
-  nm-applet --sm-disable &
-fi
+# 
+# if [ -x /usr/bin/nm-applet ]; then
+#   nm-applet --sm-disable &
+# fi
 
 exec /home/victor/.local/bin/xmonad
 
