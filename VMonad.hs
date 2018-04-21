@@ -1,8 +1,11 @@
 import XMonad
+import XMonad.ManageHook
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Actions.CopyWindow
 import XMonad.Config.Mate
 import System.IO
 
@@ -10,9 +13,10 @@ import System.IO
 -- * Eye Candy * --
 -------------------
 
-myFocusedColor = "#E9B96E"
-myBgColor      = "#2F343F"
-myTextColor    = "#D3DAE3"
+myFocusedColor   = "#E9B96E"
+myUnfocusedColor = "#768CA6" 
+myBgColor        = "#2F343F"
+myTextColor      = "#D3DAE3"
 
 -------------------------
 -- * Custom Commands * --
@@ -36,14 +40,69 @@ myKeys = [
   , ((myMod , xK_d), spawn myRofiCmd)
   ]
 
+-----------------------
+-- * My Workspaces * --
+-----------------------
+
+myWorkspaces :: [String]
+myWorkspaces
+  = [ "1:aux"
+    , "2:term"
+    , "3:dev"
+    , "4:web"
+    , "6:doc"
+    , "7:cal"
+    , "8:mail"
+    , "9:tmp"
+    , "0:media"
+    ]
+
+ws :: Int -> String
+ws i = myWorkspaces !! (i-1)
+
+wsMedia :: String
+wsMedia = ws 9
+
+wsEmacs :: String
+wsEmacs = ws 3
+
+wsTerm :: String
+wsTerm = ws 2
+
 -------------------------
 -- * My Manage Hooks * --
 -------------------------
 
 myManageHook = composeAll
-    [ className =? "Gimp"      --> doFloat
-    , className =? "Vncviewer" --> doFloat
+    [ manageGimp
+    , manageFF
+    , manageMedia
+    , manageEmacs
+    , manageTerms
     ]
+  where
+    manageGimp :: ManageHook
+    manageGimp = className =? "Gimp" --> doFloat
+
+    manageFF :: ManageHook
+    manageFF = (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
+
+    manageMedia :: ManageHook
+    manageMedia = composeAll
+      [ className =? c --> doShift wsMedia
+      | c <- ["VLC" , "Spotify"]
+      ]
+   
+    manageEmacs :: ManageHook
+    manageEmacs = className =? "Emacs"
+              --> (ask >>= doF . flip copyWindow wsEmacs)
+
+    manageTerms :: ManageHook
+    manageTerms = composeOne
+      [ className =? c -?> (ask >>= doF . flip copyWindow wsTerm)
+      | c <- ["Mate-terminal" , "URxvt"] 
+      ]
+
 ----------------------------
 -- * My modifier, Alt_R * --
 ----------------------------
@@ -69,11 +128,16 @@ myConfig xmproc = mateConfig
   , layoutHook         = avoidStruts 
                        $ layoutHook def
   , logHook            = dynamicLogWithPP xmobarPP
-                          { ppOutput = hPutStrLn xmproc
-                          , ppTitle  = xmobarColor myFocusedColor "" . shorten 70
+                          { ppOutput  = hPutStrLn xmproc
+                          , ppTitle   = xmobarColor myFocusedColor "" . shorten 70
+                          , ppCurrent = xmobarColor myFocusedColor "" . wrap "[" "]"
+                          , ppVisible = wrap "[" "]"
+                          , ppHidden  = xmobarColor myTextColor ""
+                          , ppHiddenNoWindows = xmobarColor myUnfocusedColor ""
                           }
   , handleEventHook    = handleEventHook def
                        <+> docksEventHook
+  , workspaces         = myWorkspaces
   } `additionalKeys` myKeys
 
 ----------------------------
@@ -83,4 +147,3 @@ myConfig xmproc = mateConfig
 main = do mateRegister
           xmproc <- spawnPipe "xmobar"
           xmonad (myConfig xmproc)
-
