@@ -10,10 +10,10 @@ import System.IO
 myMod = mod1Mask
 
 -- My config
-myConfig xmproc = def 
+myConfig xmproc = mateConfig 
   { modMask            = myMod
   , terminal           = "mate-terminal"
-  , focusedBorderColor = "#00FFAA"
+  , focusedBorderColor = "#729FCF"
   , manageHook         =   manageDocks
                        <+> myManageHook
                        <+> manageHook def
@@ -21,7 +21,7 @@ myConfig xmproc = def
                        $ layoutHook def
   , logHook            = dynamicLogWithPP xmobarPP
                           { ppOutput = hPutStrLn xmproc
-                          , ppTitle  = xmobarColor "green" "" . shorten 50
+                          , ppTitle  = xmobarColor "#729FCF" "" . shorten 70
                           }
   , handleEventHook    = handleEventHook def
                        <+> docksEventHook
@@ -38,7 +38,7 @@ myManageHook = composeAll
     , className =? "Vncviewer" --> doFloat
     ]
 
-main
-  = do xmproc <- spawnPipe "xmobar"
-       xmonad (myConfig xmproc)
+main = do -- mateRegister
+          xmproc <- spawnPipe "xmobar"
+          xmonad (myConfig xmproc)
 
