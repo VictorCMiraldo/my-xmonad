@@ -1,113 +1,133 @@
-/**
- * Author: Primetoxinz
+/* MY modifications on top of the 'material' theme
  */
+/*
+ * ROFI color theme
+ *
+ * Based on Base16 Material Color Scheme (https://github.com/ntpeters/base16-materialtheme-scheme)
+ *
+ * User: Tomaszal
+ * Copyright: Tomas Zaluckij
+ */
+
 * {
-    text-color:                  #d3dae3;
-    background-color:            #2f343f;
-    lightbg:                     #534c48;
-    red:                         #f15d22;
-    orange:                      #faa41a; 
-    blue:                        #729fcf; 
+	base00: #353945;
+	base01: #2E3C43;
+	base02: #314549;
+	base03: #546E7A;
+	base04: #B2CCD6;
+	base05: #EEFFFF;
+	base06: #EEFFFF;
+	base07: #FFFFFF;
+	base08: #F07178;
+	base09: #F78C6C;
+	base0A: #FFCB6B;
+	base0B: #C3E88D;
+	base0C: #89DDFF;
+	base0D: #5294E2;
+	base0E: #C792EA;
+	base0F: #FF5370;
 
-    selected-normal-foreground:  @foreground;
-    normal-foreground:           @foreground;
-    alternate-normal-background: @background;
-    selected-urgent-foreground:  @foreground;
-    urgent-foreground:           @foreground;
-    alternate-urgent-background: @background;
-    active-foreground:           @foreground;
-    selected-active-foreground:  @foreground;
-    alternate-normal-foreground: @foreground;
-    alternate-active-background: @blue;
-    bordercolor:                 @foreground;
-    normal-background:           @background;
-    selected-normal-background:  @blue;
-    separatorcolor:              @orange;
-    spacing:                     2;
-    urgent-background:           @red;
-    alternate-urgent-foreground: @foreground;
-    selected-urgent-background:  @red;
-    alternate-active-foreground: @foreground;
-    selected-active-background:  @blue;
-    active-background:           @orange;
-}
-#window {
-    border:     0;
-    text-color: @foreground;
-    background-color: rgba ( 0, 0, 0, 0 % );
-    padding:    5;
-    text-color: @bordercolor;
-    background-color: @background;
-}
-#mainbox {
-    border:  0;
-    padding: 0;
-}
-#message {
-    border:     1px dash 0px 0px ;
-    text-color: @separatorcolor;
-    padding:    2px 0px 0px ;
-}
-#textbox {
-    text-color: @foreground;
-}
-#listview {
-    fixed-height: 0;
-    border:       2px 0px 0px ;
-    padding:      2px 0px 0px ;
-    text-color: @separatorcolor;
-}
-#element {
-    border: 0;
-}
-#element.normal.normal {
-    text-color: @normal-foreground;
-    background-color: @normal-background;
-}
-#element.normal.urgent {
-    text-color: @urgent-foreground;
-    background-color: @urgent-background;
-}
-#element.normal.active {
-    text-color: @active-foreground;
-    background-color: @active-background;
-}
-#element.selected.normal {
-    text-color: @selected-normal-foreground;
-    background-color: @selected-normal-background;
-}
-#element.selected.urgent {
-    text-color: @selected-urgent-foreground;
-    background-color: @selected-urgent-background;
-}
-#element.selected.active {
-    text-color: @selected-active-foreground;
-    background-color: @selected-active-background;
-}
-#element.alternate.normal {
-    text-color: @alternate-normal-foreground;
-    background-color: @alternate-normal-background;
-}
-#element.alternate.urgent {
-    text-color: @alternate-urgent-foreground;
-    background-color: @alternate-urgent-background;
-}
-#element.alternate.active {
-    text-color: @alternate-active-foreground;
-    background-color: @alternate-active-background;
-}
-#sidebar {
-    border: 1px dash 0px 0px ;
-}
-#button selected {
-    text-color: @selected-normal-foreground;
-    background-color: @selected-normal-background;
-}
-#inputbar {
-    spacing: 0;
-    border: 0px ;
-}
-#button normal {
-    text-color: @foreground;
+	/*base0D: #00BCD4;*/
+
+	spacing: 0;
+	background-color: transparent;
+
+	font: "Roboto Mono 13";
 }
 
+window {
+	transparency: "real";
+	/*fullscreen: true;*/
+	background-color: #353945CC; /*base00 + CC (80% opacity)*/
+}
+
+mainbox {
+	children: [inputbar, message, sidebar, listview];
+	spacing: 30px;
+	/*margin: 20%;*/
+	padding: 30px 0;
+	border: 1px;
+	border-color: @base0D;
+}
+
+inputbar {
+	padding: 0 30px;
+	children: [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {
+	text-color: @base0D;
+}
+
+textbox-prompt-colon {
+	expand: false;
+	str: ":";
+	margin: 0 1ch 0 0;
+	text-color: @base0D;
+}
+
+entry {
+	text-color: @base07;
+}
+
+case-indicator {
+	text-color: @base0F;
+}
+
+sidebar, message {
+	border: 1px 0;
+	border-color: @base0D;
+}
+
+button, textbox {
+	background-color: @base03;
+	text-color: @base07;
+	padding: 5px;
+}
+
+button selected {
+	background-color: @base0D;
+}
+
+listview {
+	scrollbar: true;
+	margin: 0 10px 0 30px;
+}
+
+scrollbar {
+	background-color: @base03;
+	handle-color: @base0D;
+	handle-width: 10px;
+	border: 0 1px;
+	border-color: @base0D;
+	margin: 0 0 0 20px;
+}
+
+element {
+	padding: 5px;
+	highlight: bold underline;
+}
+
+element normal {
+	background-color: transparent;
+}
+
+element selected {
+	background-color: @base0D;
+}
+
+element alternate {
+	/*background-color: @base03;*/
+}
+
+element normal normal, element selected normal, element alternate normal {
+	text-color: @base07;
+}
+
+element normal urgent, element selected urgent, element alternate urgent {
+	text-color: @base0F;
+}
+
+element normal active, element selected active, element alternate active {
+	text-color: @base0B;
+}

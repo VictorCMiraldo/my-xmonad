@@ -3,6 +3,10 @@ import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen
+
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.CopyWindow
@@ -50,11 +54,11 @@ myWorkspaces
     , "2:term"
     , "3:dev"
     , "4:web"
-    , "6:doc"
-    , "7:cal"
-    , "8:mail"
-    , "9:tmp"
-    , "0:media"
+    , "5:doc"
+    , "6:cal"
+    , "7:mail"
+    , "8:tmp"
+    , "9:media"
     ]
 
 ws :: Int -> String
@@ -88,18 +92,18 @@ myManageHook = composeAll
     manageFF = (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
 
     manageMedia :: ManageHook
-    manageMedia = composeAll
+    manageMedia = composeAll $
       [ className =? c --> doShift wsMedia
-      | c <- ["VLC" , "Spotify"]
-      ]
+      | c <- ["vlc"]] ++
+      [ title =? "Spotify" --> doShift wsMedia ]
    
     manageEmacs :: ManageHook
     manageEmacs = className =? "Emacs"
               --> (ask >>= doF . flip copyWindow wsEmacs)
 
     manageTerms :: ManageHook
-    manageTerms = composeOne
-      [ className =? c -?> (ask >>= doF . flip copyWindow wsTerm)
+    manageTerms = composeAll
+      [ className =? c --> (ask >>= doF . flip copyWindow wsTerm)
       | c <- ["Mate-terminal" , "URxvt"] 
       ]
 
@@ -118,27 +122,30 @@ myMod = mod1Mask
 -- We receive a handle as parameter since on the main
 -- function we spawn the xmobar process and need
 -- to do some wiring here.
-myConfig xmproc = mateConfig 
-  { modMask            = myMod
-  , terminal           = "mate-terminal"
-  , focusedBorderColor = myFocusedColor
-  , manageHook         =   manageDocks
-                       <+> myManageHook
-                       <+> manageHook def
-  , layoutHook         = avoidStruts 
-                       $ layoutHook def
-  , logHook            = dynamicLogWithPP xmobarPP
-                          { ppOutput  = hPutStrLn xmproc
-                          , ppTitle   = xmobarColor myFocusedColor "" . shorten 70
-                          , ppCurrent = xmobarColor myFocusedColor "" . wrap "[" "]"
-                          , ppVisible = wrap "[" "]"
-                          , ppHidden  = xmobarColor myTextColor ""
-                          , ppHiddenNoWindows = xmobarColor myUnfocusedColor ""
-                          }
-  , handleEventHook    = handleEventHook def
-                       <+> docksEventHook
-  , workspaces         = myWorkspaces
-  } `additionalKeys` myKeys
+myConfig xmproc 
+  = fullscreenSupport 
+  $ mateConfig 
+    { modMask            = myMod
+    , terminal           = "mate-terminal"
+    , focusedBorderColor = myFocusedColor
+    , manageHook         =   manageDocks
+                         <+> myManageHook
+                         <+> manageHook def
+    , layoutHook         = smartBorders
+                         . avoidStruts 
+                         $ layoutHook def
+    , logHook            = dynamicLogWithPP xmobarPP
+                            { ppOutput  = hPutStrLn xmproc
+                            , ppTitle   = xmobarColor myFocusedColor "" . shorten 70
+                            , ppCurrent = xmobarColor myFocusedColor "" . wrap "[" "]"
+                            , ppVisible = wrap "[" "]"
+                            , ppHidden  = xmobarColor myTextColor ""
+                            , ppHiddenNoWindows = xmobarColor myUnfocusedColor ""
+                            }
+    , handleEventHook    = handleEventHook def
+                         <+> docksEventHook
+    , workspaces         = myWorkspaces
+    } `additionalKeys` myKeys
 
 ----------------------------
 -- * Running everything * --
