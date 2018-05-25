@@ -13,7 +13,10 @@ fi
 sudo cp ./xmonad.desktop /usr/share/applications/xmonad.desktop
 
 gsettings set org.mate.session.required-components windowmanager xmonad
-
 # For going back to marco compositor, run:
 #  gsettings set org.mate.session.required-components windowmanager marco
 
+# Now, link xmobarrc
+ln -fs xmobarrc ../.xmobarrc
+
+stack install

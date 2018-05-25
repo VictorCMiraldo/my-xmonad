@@ -113,7 +113,10 @@ myManageHook = composeAll
 
 -- We later use xmodmap to map Caps_Lock
 -- to Alt_R and live happily ever after.
-myMod = mod1Mask
+--
+-- My ThinkPad came with ISO_Level3_Shift (aka AltGR) in the
+-- mod5 group;
+myMod = mod5Mask
 
 -------------------
 -- * My Config * --
