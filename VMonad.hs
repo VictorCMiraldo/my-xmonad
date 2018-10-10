@@ -88,6 +88,8 @@ wsTerm = ws 2
 myManageHook = composeAll
     [ manageGimp
     , manageFF
+    , manageBlueman
+    , manageVolumeCtl
     , manageMedia
     , manageEmacs
     , manageTerms
@@ -98,6 +100,12 @@ myManageHook = composeAll
 
     manageFF :: ManageHook
     manageFF = (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
+
+    manageBlueman :: ManageHook
+    manageBlueman = (className =? "Blueman-manager") --> doFloat
+
+    manageVolumeCtl :: ManageHook
+    manageVolumeCtl = (className =? "Mate-volume-control") --> doFloat
 
     manageMedia :: ManageHook
     manageMedia = composeAll $
