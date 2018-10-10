@@ -8,7 +8,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen
 
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig(additionalKeys, removeKeys)
 import XMonad.Actions.CopyWindow
 import XMonad.Config.Mate
 import System.IO
@@ -38,10 +38,18 @@ myRofiCmd = unwords [ "rofi"
 -- * My Keybindings * --
 ------------------------
 
+myKeys :: [((KeyMask, KeySym), X ())] 
 myKeys = [ 
   -- It is VERY important to override the restart command.
     ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && xmonad --restart" )
   , ((myMod , xK_d), spawn myRofiCmd)
+  ]
+
+myRemovedKeys :: [(KeyMask, KeySym)]
+myRemovedKeys = [
+  -- I like to use M-n and M-p on my emacs!
+    (myMod , xK_n)
+  , (myMod , xK_p)
   ]
 
 -----------------------
@@ -116,7 +124,11 @@ myManageHook = composeAll
 --
 -- My ThinkPad came with ISO_Level3_Shift (aka AltGR) in the
 -- mod5 group;
-myMod = mod5Mask
+-- Seems like this was a problem with the layout. 
+-- (English US with euro on 5) has altgr mapped to ISO_Level3_Shift
+-- (English US) has altgr maped to Alt_R
+--
+myMod = mod1Mask
 
 -------------------
 -- * My Config * --
@@ -127,7 +139,7 @@ myMod = mod5Mask
 -- to do some wiring here.
 myConfig xmproc 
   = fullscreenSupport 
-  $ mateConfig 
+  $ (mateConfig 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor
@@ -149,6 +161,7 @@ myConfig xmproc
                          <+> docksEventHook
     , workspaces         = myWorkspaces
     } `additionalKeys` myKeys
+    ) `removeKeys`     myRemovedKeys
 
 ----------------------------
 -- * Running everything * --
