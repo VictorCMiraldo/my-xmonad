@@ -1,104 +1,96 @@
 [Toplevel top]
-orientation=top
-expand=true
 size=28
+expand=true
+orientation=top
 
 [Object briskmenu]
 locked=true
-position=0
-panel-right-stick=false
 toplevel-id=top
-applet-iid=BriskMenuFactory::BriskMenu
+position=0
 object-type=applet
+applet-iid=BriskMenuFactory::BriskMenu
+panel-right-stick=false
 
 [Object notificationarea]
 locked=true
-position=1593
-panel-right-stick=false
 toplevel-id=top
-applet-iid=NotificationAreaAppletFactory::NotificationArea
+position=1593
 object-type=applet
+applet-iid=NotificationAreaAppletFactory::NotificationArea
+panel-right-stick=false
 
 [Object indicatorappletcomplete]
 locked=true
-position=10
-panel-right-stick=true
 toplevel-id=top
-applet-iid=IndicatorAppletCompleteFactory::IndicatorAppletComplete
+position=10
 object-type=applet
+applet-iid=IndicatorAppletCompleteFactory::IndicatorAppletComplete
+panel-right-stick=true
 
 [Object clockapplet]
 locked=true
-position=0
-panel-right-stick=true
 toplevel-id=top
-applet-iid=ClockAppletFactory::ClockApplet
+position=0
 object-type=applet
+applet-iid=ClockAppletFactory::ClockApplet
+panel-right-stick=true
 
 [Object separator]
 locked=false
+toplevel-id=top
 position=1268
-panel-right-stick=false
-toplevel-id=top
 object-type=separator
-
-[Object appmenuapplet]
-locked=false
-position=80
 panel-right-stick=false
-toplevel-id=top
-applet-iid=AppmenuAppletFactory::AppmenuApplet
-object-type=applet
 
 [Object launcher]
-locked=false
-position=1334
 launcher-location=/usr/share/applications/caja-browser.desktop
-panel-right-stick=false
+locked=false
 toplevel-id=top
+position=1334
 object-type=launcher
 menu-path=applications:/
+panel-right-stick=false
 
 [Object launcher]
-locked=false
-position=1362
 launcher-location=mate-terminal.desktop
-panel-right-stick=false
+locked=false
 toplevel-id=top
+position=1362
 object-type=launcher
 menu-path=applications:/
+panel-right-stick=false
 
 [Object launcher]
-locked=false
-position=1278
 launcher-location=thunderbird-1.desktop
-panel-right-stick=false
+locked=false
 toplevel-id=top
+position=1278
 object-type=launcher
 menu-path=applications:/
+panel-right-stick=false
 
 [Object launcher]
-locked=false
-position=1306
 launcher-location=firefox-1.desktop
-panel-right-stick=false
+locked=false
 toplevel-id=top
+position=1306
 object-type=launcher
 menu-path=applications:/
+panel-right-stick=false
 
 [Object launcher]
-locked=false
-position=1390
 launcher-location=spotify-1.desktop
-panel-right-stick=false
+locked=false
 toplevel-id=top
+position=1390
 object-type=launcher
 menu-path=applications:/
+panel-right-stick=false
 
 [Object separator]
 locked=true
-position=1418
-panel-right-stick=false
 toplevel-id=top
+position=1418
 object-type=separator
+panel-right-stick=false
 

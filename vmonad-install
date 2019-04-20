@@ -17,6 +17,6 @@ gsettings set org.mate.session.required-components windowmanager xmonad
 #  gsettings set org.mate.session.required-components windowmanager marco
 
 # Now, link xmobarrc
-ln -fs xmobarrc ../.xmobarrc
+cp xmobarrc $HOME/.xmobarrc
 
 stack install
