@@ -1,4 +1,5 @@
 import XMonad
+import qualified XMonad.StackSet as SS
 import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
@@ -34,6 +35,24 @@ myRofiCmd = unwords [ "rofi"
           , "-theme"    , "/home/victor/.xmonad/myrofi.rasi"
           ]
 
+
+------------------------------
+-- * Custom Functionality * --
+------------------------------
+
+-- Send focus to the next screen. We do so by grabing the window
+-- stack and checking whether there is a next screen to look at.
+myCycleScreen :: (WorkspaceId -> X ()) -> X ()
+myCycleScreen act = do
+  visibleWs <- gets (SS.visible . windowset)
+  case visibleWs of
+    []       -> return ()
+    (next:_) -> act (screenId next)
+ where
+   screenId :: SS.Screen i l a sid sd -> i
+   screenId = SS.tag . SS.workspace
+            
+
 ------------------------
 -- * My Keybindings * --
 ------------------------
@@ -43,6 +62,9 @@ myKeys = [
   -- It is VERY important to override the restart command.
     ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && xmonad --restart" )
   , ((myMod , xK_d), spawn myRofiCmd)
+  -- Swap focused physical screens
+  , ((myMod , xK_e),              myCycleScreen (windows . SS.view))
+  , ((myMod .|. shiftMask, xK_e), myCycleScreen (windows . SS.shift))
   ]
 
 myRemovedKeys :: [(KeyMask, KeySym)]
@@ -50,6 +72,11 @@ myRemovedKeys = [
   -- I like to use M-n and M-p on my emacs!
     (myMod , xK_n)
   , (myMod , xK_p)
+  -- I don't like 'switch to screen id x', I much rather have
+  -- switch to the next one.
+  , (myMod , xK_w)
+  , (myMod , xK_e)
+  , (myMod , xK_r)
   ]
 
 -----------------------
@@ -154,8 +181,8 @@ myConfig xmproc
     , manageHook         =   manageDocks
                          <+> myManageHook
                          <+> manageHook def
-    , layoutHook         = smartBorders
-                         . avoidStruts 
+    , layoutHook         = avoidStruts
+                         . smartBorders
                          $ layoutHook def
     , logHook            = dynamicLogWithPP xmobarPP
                             { ppOutput  = hPutStrLn xmproc
@@ -168,13 +195,13 @@ myConfig xmproc
     , handleEventHook    = handleEventHook def
                          <+> docksEventHook
     , workspaces         = myWorkspaces
-    } `additionalKeys` myKeys
-    ) `removeKeys`     myRemovedKeys
+    } `removeKeys`     myRemovedKeys
+    ) `additionalKeys` myKeys
 
 ----------------------------
 -- * Running everything * --
 ----------------------------
 
 main = do mateRegister
-          xmproc <- spawnPipe "xmobar"
+          xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
           xmonad (myConfig xmproc)

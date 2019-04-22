@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template =  " %StdinReader% }{ %coretemp% | %multicpu% | %memory% | %swap% "
+   , template =  " %StdinReader% }{ %coretemp% | %dynnetwork% | %multicpu% | %memory% | %swap% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -36,25 +36,33 @@ Config {
    --   color can be set by enclosing in <fc></fc> tags. For more details
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
    , commands = [ Run Swap [] 100
-                , Run MultiCpu [ "--template" , "Cpu: <total>%"
-                               , "--Low"      , "50"         -- units: %
-                               , "--High"     , "85"         -- units: %
-                               , "--low"      , "green"
-                               , "--normal"   , "orange"
-                               , "--high"     , "red"
-                               ] 50
-                , Run Memory   [ "--template" ,"Mem: <usedratio>%"
-                               , "--Low"      , "20"        -- units: %
-                               , "--High"     , "90"        -- units: %
-                               , "--low"      , "green"
-                               , "--normal"   , "orange"
-                               , "--high"     , "red"
-                               ] 50 
-                , Run CoreTemp [ "--template" , "Temp: <core0> C; <core1> C"
-                               , "--Low"      , "40"
-                               , "--High"     , "65"
-                               , "--high"     , "red"
-                               ] 50
+                , Run DynNetwork [ "--template" , "<dev>: up <tx>; down <rx>"
+                                 , "--Low"      , "10000"
+                                 , "--High"     , "500000"
+                                 , "--low"      , "green"
+                                 , "--normal"   , "orange"
+                                 , "--high"     , "red"
+                                 , "-S"         , "True"
+                                 ] 50
+                , Run MultiCpu   [ "--template" , "Cpu: <total>%"
+                                 , "--Low"      , "50"         -- units: %
+                                 , "--High"     , "85"         -- units: %
+                                 , "--low"      , "green"
+                                 , "--normal"   , "orange"
+                                 , "--high"     , "red"
+                                 ] 50
+                , Run Memory     [ "--template" ,"Mem: <usedratio>%"
+                                 , "--Low"      , "20"        -- units: %
+                                 , "--High"     , "90"        -- units: %
+                                 , "--low"      , "green"
+                                 , "--normal"   , "orange"
+                                 , "--high"     , "red"
+                                 ] 50 
+                , Run CoreTemp   [ "--template" , "Temp: <core0> C; <core1> C"
+                                 , "--Low"      , "40"
+                                 , "--High"     , "65"
+                                 , "--high"     , "red"
+                                 ] 50
                 , Run StdinReader
                 ]
         ]
