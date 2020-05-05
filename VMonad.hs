@@ -163,7 +163,7 @@ myManageHook = composeAll
 -- (English US with euro on 5) has altgr mapped to ISO_Level3_Shift
 -- (English US) has altgr maped to Alt_R
 --
-myMod = mod1Mask
+myMod = mod4Mask
 
 -------------------
 -- * My Config * --
