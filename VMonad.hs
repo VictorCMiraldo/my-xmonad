@@ -7,6 +7,7 @@ import XMonad.Hooks.ManageDocks
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.ThreeColumns
 
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, removeKeys)
@@ -85,15 +86,15 @@ myRemovedKeys = [
 
 myWorkspaces :: [String]
 myWorkspaces
-  = [ "1:aux"
-    , "2:term"
-    , "3:dev"
-    , "4:web"
-    , "5:doc"
-    , "6:cal"
-    , "7:mail"
-    , "8:tmp"
-    , "9:media"
+  = [ "1"
+    , "2"
+    , "3"
+    , "4"
+    , "5"
+    , "6"
+    , "7"
+    , "8"
+    , "9"
     ]
 
 ws :: Int -> String
@@ -162,6 +163,21 @@ myManageHook = composeAll
 --
 myMod = mod4Mask
 
+--------------------
+-- * My Layouts * --
+--------------------
+
+myLayouts = avoidStruts . smartBorders 
+          $ tiled ||| Mirror tiled ||| threecol ||| Full 
+  where 
+    nmaster = 1     -- default number of windows on master pane
+    delta   = 3/100 -- percentage to increment when resizing panes
+    ratio   = 1/2   -- proportion of screen ocupied by master
+
+    tiled    = Tall nmaster delta ratio
+    threecol = ThreeColMid nmaster delta ratio 
+    
+
 -------------------
 -- * My Config * --
 -------------------
@@ -171,16 +187,14 @@ myMod = mod4Mask
 -- to do some wiring here.
 myConfig xmproc 
   = fullscreenSupport 
-  $ (defaultConfig 
+  $ (mateConfig 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor
     , manageHook         =   manageDocks
                          <+> myManageHook
                          <+> manageHook def
-    , layoutHook         = avoidStruts
-                         . smartBorders
-                         $ layoutHook def
+    , layoutHook         = myLayouts
     , logHook            = dynamicLogWithPP xmobarPP
                             { ppOutput  = hPutStrLn xmproc
                             , ppTitle   = xmobarColor myFocusedColor "" . shorten 70

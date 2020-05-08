@@ -1,0 +1,4 @@
+#! /bin/bash
+
+ln -fs $(pwd)/xmonad-compat-tweak.layout /usr/share/mate-panel/layouts/xmonad-compat-tweak.layout
+ln -fs $(pwd)/xmonad-compat-tweak.panel /usr/share/mate-panel/layouts/xmonad-compat-tweak.panel
