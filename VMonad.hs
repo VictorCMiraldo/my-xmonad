@@ -6,7 +6,6 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
 import XMonad.Layout.ThreeColumns
 
 import XMonad.Util.Run(spawnPipe)
@@ -33,7 +32,7 @@ myRofiCmd = unwords [ "rofi"
           , "-show"     , "run" 
           , "-lines"    , "7" 
           , "-matching" , "fuzzy"
-          , "-theme"    , "/home/victor/.xmonad/myrofi.rasi"
+          , "-theme"    , "Arc-Dark"
           ]
 
 
@@ -61,11 +60,13 @@ myCycleScreen act = do
 myKeys :: [((KeyMask, KeySym), X ())] 
 myKeys = [ 
   -- It is VERY important to override the restart command.
-    ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && xmonad --restart" )
+    ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && stack exec xmonad-x86_64-linux -- --restart" )
   , ((myMod , xK_d), spawn myRofiCmd)
   -- Swap focused physical screens
   , ((myMod , xK_e),              myCycleScreen (windows . SS.view))
   , ((myMod .|. shiftMask, xK_e), myCycleScreen (windows . SS.shift))
+  -- Toggle struts
+  , ((myMod , xK_b) , sendMessage ToggleStruts)
   ]
 
 myRemovedKeys :: [(KeyMask, KeySym)]
@@ -167,8 +168,8 @@ myMod = mod4Mask
 -- * My Layouts * --
 --------------------
 
-myLayouts = avoidStruts . smartBorders 
-          $ tiled ||| Mirror tiled ||| threecol ||| Full 
+myLayouts = smartBorders . avoidStruts
+          $ tiled ||| Mirror tiled ||| threecol ||| Full
   where 
     nmaster = 1     -- default number of windows on master pane
     delta   = 3/100 -- percentage to increment when resizing panes
@@ -185,9 +186,7 @@ myLayouts = avoidStruts . smartBorders
 -- We receive a handle as parameter since on the main
 -- function we spawn the xmobar process and need
 -- to do some wiring here.
-myConfig xmproc 
-  = fullscreenSupport 
-  $ (mateConfig 
+myConfig xmproc = (mateConfig 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor
