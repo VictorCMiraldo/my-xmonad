@@ -113,18 +113,12 @@ wsTerm = ws 2
 -------------------------
 
 myManageHook = composeAll
-    [ manageGimp
-    , manageFF
+    [ manageFF
     , manageBlueman
     , manageVolumeCtl
     , manageMedia
-    , manageEmacs
-    , manageTerms
     ]
   where
-    manageGimp :: ManageHook
-    manageGimp = className =? "Gimp" --> doFloat
-
     manageFF :: ManageHook
     manageFF = (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
 
@@ -140,15 +134,18 @@ myManageHook = composeAll
       | c <- ["vlc"]] ++
       [ title =? "Spotify" --> doShift wsMedia ]
    
-    manageEmacs :: ManageHook
-    manageEmacs = className =? "Emacs"
-              --> (ask >>= doF . flip copyWindow wsEmacs)
+    -- Shifting emacs and terminals automatically is more confusing
+    -- than it is helpful; nevermind.
+    -- 
+    -- manageEmacs :: ManageHook
+    -- manageEmacs = className =? "Emacs"
+    --           --> (ask >>= doF . flip copyWindow wsEmacs)
 
-    manageTerms :: ManageHook
-    manageTerms = composeAll
-      [ className =? c --> (ask >>= doF . flip copyWindow wsTerm)
-      | c <- ["Mate-terminal" , "URxvt"] 
-      ]
+    -- manageTerms :: ManageHook
+    -- manageTerms = composeAll
+    --   [ className =? c --> (ask >>= doF . flip copyWindow wsTerm)
+    --   | c <- ["Mate-terminal" , "URxvt"] 
+    --   ]
 
 ----------------------------
 -- * My modifier, Alt_R * --
@@ -174,7 +171,7 @@ myMod = mod4Mask
 -- to do some wiring here.
 myConfig xmproc 
   = fullscreenSupport 
-  $ (mateConfig 
+  $ (defaultConfig 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor

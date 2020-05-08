@@ -1,17 +1,17 @@
 Config { 
 
    -- appearance
-     font =         "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
+     font =         "xft:Bitstream Vera Sans Mono:size=10:antialias=true"
    , bgColor =      "#2F343F"
    , fgColor =      "#D3DAE3"
-   , position =     Bottom
+   , position =     Bottom -- W L 75
    , border =       BottomB
    , borderColor =  "#646464"
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template =  " %StdinReader% }{ %coretemp% | %dynnetwork% | %multicpu% | %memory% | %swap% "
+   , template =  " %StdinReader% }{ %coretemp% | %dynnetwork% | %multicpu% | %memory% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -63,6 +63,7 @@ Config {
                                  , "--High"     , "65"
                                  , "--high"     , "red"
                                  ] 50
+                , Run Date "%a, %b %d - %H:%M" "date" 600
                 , Run StdinReader
                 ]
         ]

@@ -16,7 +16,4 @@ gsettings set org.mate.session.required-components windowmanager xmonad
 # For going back to marco compositor, run:
 #  gsettings set org.mate.session.required-components windowmanager marco
 
-# Now, link xmobarrc
-# cp xmobarrc $HOME/.xmobarrc
-
 stack install

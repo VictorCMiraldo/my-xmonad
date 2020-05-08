@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=XMonad
-Exec=/home/victor/.local/bin/xmonad-x86_64-linux
+Exec=/home/victor/.xmonad/xmonadrc
 NoDisplay=true
 X-GNOME-WMName=XMonad
 X-GNOME-Autostart-Phase=WindowManager

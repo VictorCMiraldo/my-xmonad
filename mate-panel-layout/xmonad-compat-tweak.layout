@@ -1,96 +1,67 @@
 [Toplevel top]
-size=28
+enable-buttons=false
+size=21
+screen=0
+monitor=0
 expand=true
-orientation=top
+orientation=bottom
 
-[Object briskmenu]
+[Object object-0]
 locked=true
+toplevel-id=top
+position=1753
+object-type=applet
+applet-iid=IndicatorAppletFactory::IndicatorApplet
+panel-right-stick=false
+
+[Object object-2]
+locked=false
 toplevel-id=top
 position=0
 object-type=applet
 applet-iid=BriskMenuFactory::BriskMenu
 panel-right-stick=false
 
-[Object notificationarea]
+[Object object-1]
 locked=true
 toplevel-id=top
-position=1593
+position=1502
 object-type=applet
 applet-iid=NotificationAreaAppletFactory::NotificationArea
 panel-right-stick=false
 
-[Object indicatorappletcomplete]
-locked=true
-toplevel-id=top
-position=10
-object-type=applet
-applet-iid=IndicatorAppletCompleteFactory::IndicatorAppletComplete
-panel-right-stick=true
-
-[Object clockapplet]
-locked=true
-toplevel-id=top
-position=0
-object-type=applet
-applet-iid=ClockAppletFactory::ClockApplet
-panel-right-stick=true
-
-[Object separator]
+[Object object-3]
 locked=false
 toplevel-id=top
-position=1268
-object-type=separator
+position=411
+object-type=applet
+applet-iid=WindowButtonsAppletFactory::WindowButtonsApplet
 panel-right-stick=false
 
-[Object launcher]
+[Object object-4]
 launcher-location=/usr/share/applications/caja-browser.desktop
-locked=false
-toplevel-id=top
-position=1334
-object-type=launcher
-menu-path=applications:/
-panel-right-stick=false
-
-[Object launcher]
-launcher-location=mate-terminal.desktop
-locked=false
-toplevel-id=top
-position=1362
-object-type=launcher
-menu-path=applications:/
-panel-right-stick=false
-
-[Object launcher]
-launcher-location=thunderbird-1.desktop
-locked=false
-toplevel-id=top
-position=1278
-object-type=launcher
-menu-path=applications:/
-panel-right-stick=false
-
-[Object launcher]
-launcher-location=firefox-1.desktop
-locked=false
-toplevel-id=top
-position=1306
-object-type=launcher
-menu-path=applications:/
-panel-right-stick=false
-
-[Object launcher]
-launcher-location=spotify-1.desktop
-locked=false
-toplevel-id=top
-position=1390
-object-type=launcher
-menu-path=applications:/
-panel-right-stick=false
-
-[Object separator]
 locked=true
 toplevel-id=top
-position=1418
-object-type=separator
+position=169
+object-type=launcher
+menu-path=applications:/
 panel-right-stick=false
+
+[Object object-5]
+launcher-location=/usr/share/applications/firefox.desktop
+locked=true
+toplevel-id=top
+position=199
+object-type=launcher
+menu-path=applications:/
+panel-right-stick=false
+
+[Customsetting maximusdecoration]
+mate-maximus-undecorate=False
+mate-maximus-recorded=True
+
+[Customsetting windowcontrollayout]
+mate-general=:minimize,maximize,close
+mate-interface=:minimize,maximize,close
+gnome-wm-preferences=:minimize,maximize,close
 
