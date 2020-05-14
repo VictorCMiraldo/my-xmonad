@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template =  " %StdinReader% }{ %coretemp% | %dynnetwork% | %multicpu% | %memory% | %date% "
+   , template =  " %StdinReader% }{ %dynnetwork% | %battery% | %coretemp% | %multicpu% | %memory% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -62,6 +62,17 @@ Config {
                                  , "--Low"      , "40"
                                  , "--High"     , "65"
                                  , "--high"     , "red"
+                                 ] 50
+                , Run Battery    [ "--template" , "Batt: <acstatus>"
+                                 , "--Low"      , "15"        -- units: %
+                                 , "--High"     , "75"        -- units: %
+                                 , "--low"      , "red"
+                                 , "--normal"   , "orange"
+                                 , "--high"     , "green"
+                                 , "--" -- battery specific options
+                                 , "-o"	, "<left>% (<timeleft>)"      -- discharging status
+                                 , "-O"	, "<fc=#dAA520>Charging</fc>" -- AC "on" status
+                                 , "-i"	, "<fc=#20AF09>Charged</fc>"  -- charged status
                                  ] 50
                 , Run Date "%a, %b %d - %H:%M" "date" 600
                 , Run StdinReader
