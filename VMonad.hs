@@ -61,12 +61,15 @@ myKeys :: [((KeyMask, KeySym), X ())]
 myKeys = [ 
   -- It is VERY important to override the restart command.
     ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && stack exec xmonad-x86_64-linux -- --restart" )
+  -- Launch rofi
   , ((myMod , xK_d), spawn myRofiCmd)
   -- Swap focused physical screens
   , ((myMod , xK_e),              myCycleScreen (windows . SS.view))
   , ((myMod .|. shiftMask, xK_e), myCycleScreen (windows . SS.shift))
   -- Toggle struts
   , ((myMod , xK_b) , sendMessage ToggleStruts)
+  -- Swap keyboard layouts
+  , ((myMod , xK_i) , spawn "/home/victor/repos/vsr/scripts/kbd-layout-switch")
   ]
 
 myRemovedKeys :: [(KeyMask, KeySym)]
