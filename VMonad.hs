@@ -60,7 +60,7 @@ myCycleScreen act = do
 myKeys :: [((KeyMask, KeySym), X ())] 
 myKeys = [ 
   -- It is VERY important to override the restart command.
-    ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && stack exec xmonad-x86_64-linux -- --restart" )
+    ((myMod , xK_q), spawn "cd /home/victor/.xmonad && stack install && stack exec xmonad-x86_64-linux -- --restart && date > ~/xmonad-restart" )
   -- Launch rofi
   , ((myMod , xK_d), spawn myRofiCmd)
   -- Swap focused physical screens
@@ -189,7 +189,7 @@ myLayouts = smartBorders . avoidStruts
 -- We receive a handle as parameter since on the main
 -- function we spawn the xmobar process and need
 -- to do some wiring here.
-myConfig xmproc = (mateConfig 
+myConfig xmproc = (def 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor
