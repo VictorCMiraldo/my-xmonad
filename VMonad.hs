@@ -165,7 +165,11 @@ myManageHook = composeAll
 -- (English US with euro on 5) has altgr mapped to ISO_Level3_Shift
 -- (English US) has altgr maped to Alt_R
 --
-myMod = mod4Mask
+--
+-- Nevertheless, I'll be whitching to alt since I can't get mouse actions
+-- to woek with mod4Mask; I'll deal with emacs-specific stuff within emacs if it turns out to
+-- be too nasty. 
+myMod = mod1Mask
 
 --------------------
 -- * My Layouts * --
