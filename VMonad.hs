@@ -193,7 +193,7 @@ myLayouts = smartBorders . avoidStruts
 -- We receive a handle as parameter since on the main
 -- function we spawn the xmobar process and need
 -- to do some wiring here.
-myConfig xmproc = (def 
+myConfig xmproc = (mateConfig 
     { modMask            = myMod
     , terminal           = "mate-terminal"
     , focusedBorderColor = myFocusedColor
